@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
 						})
 						getAllStandings();
 						getAllTeamName();
-						getAllTeamNameId();
 					} else if(page === 'match') {
 						getMatchAll();
 					}

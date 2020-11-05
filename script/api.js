@@ -4,7 +4,7 @@ const API_KEY = '05a36867cd4e4d8bbf37e7fb67f24339';
 const LEAGUE_ID = 2021;
 const ENDPOINT_COMPETITION = `${BASE_URL}/competitions/${LEAGUE_ID}/standings`;
 const ENDPOINT_MATCH = `${BASE_URL}/competitions/${LEAGUE_ID}/matches?status=SCHEDULED`;
-const ENDPOINT_TEAM = `${BASE_URL}/teams/`;
+const ENDPOINT_TEAM = `${BASE_URL}/teams`;
 
 const fetchApi = url => {
   return fetch(url, {
@@ -44,7 +44,7 @@ function showStandings(data) {
     standings += `
     <tr>
       <td>${standing.position}</td>
-      <td><img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/></td>
+      <td><img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" height="30px" alt="badge"/></td>
       <td>${standing.team.name}</td>
       <td>${standing.won}</td>
       <td>${standing.draw}</td>
@@ -61,14 +61,22 @@ function showStandings(data) {
     th{
       font-size: 1.2rem;
     }
+    .card {
+      padding-left: 24px;
+      padding-right: 24px;
+      margin: 30px 0;
+    }
+    table {
+      padding: 0 0 20px;
+    }
   </style>
-  <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">
+  <div class="card">
 
   <table class="striped responsive-table">
       <thead>
           <tr>
               <th>No</th>
-              <th></th>
+              <th>Logo</th>
               <th>Team Name</th>
               <th>W</th>
               <th>D</th>
@@ -164,7 +172,7 @@ function showingDataTeamName(data) {
       <div class="card center-align">
         <div class="card-content"><img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="100px" height="100px"  alt=""></div>
         <div class="card-action">
-          <a class="waves-effect waves-block waves-light btn btn-team" href="./home.html?id=${team.id}">${team.name}</a>
+          <a class="waves-effect waves-block waves-light btn btn-team" href="./team.html?id=${team.id}">${team.name}</a>
         </div>
       </div>
     </div>
@@ -179,40 +187,61 @@ const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
 
 function getAllTeamNameId() {
-  fetchApi(`${ENDPOINT_TEAM}home/${idParam}`)
+  fetchApi(`${ENDPOINT_TEAM}/${idParam}`)
     .then(data => {
       showingDataTeamNameId(data);
     })
-    .catch(err => console.log(`Error ${err}`));
+    .catch(err => console.error(`Error ${err}`));
 }
 
 function showingDataTeamNameId(data) {
   let teamsHTML = '';
-  let teamsHTMLEl = document.getElementById('body-teams');
+  let squadHTML = '';
+  let teamsHTMLEl = document.getElementById('content-team');
+  data.squad.forEach(squads => {
+    if(squads.position === null) {
+      return '';
+    }
+    squadHTML += `
+    <tbody>
+        <td>${squads.name}</td>
+        <td>${squads.position}</td>
+        <td>${squads.nationality}</td>
+    </tbody>
+    `
+  })
   console.log(data);
-  data.teams.forEach(team => {
     teamsHTML += `
-    <div class="section">
+    <div class="section center">
       <div class="container">
-        <div class="row card">
-          <div class="col s12 m6 card-image">
-            <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="${team.name}">
+        <div class="row">
+          <div class="col s12 m6">
+            <img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="${data.name}">
           </div>
           <div class="col s12 m6 left-align">
-            <h3>${team.name}</h3>
-            <p>${team.name} berdiri sejak tahun ${team.founded}</p>
-            <p>Venue  : ${team.venue}</p>
-            <p>Phone  : ${team.phone}</p>
-            <p>Email  : ${team.email}</p>
-            <p>Address: ${team.address}</p>
-            <p>Kunjungi Website ${team.website}</p>
+            <h3>${data.name}</h3>
+            <p>${data.name} berdiri sejak tahun ${data.founded}</p>
+            <p>Venue  : ${data.venue}</p>
+            <p>Phone  : ${data.phone}</p>
+            <p>Email  : ${data.email}</p>
+            <p>Address: ${data.address}</p>
+            <p>Kunjungi Website ${data.website}</p>
           </div>
         </div>
+        <table>
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Posisi</th>
+                <th>Nasional</th>
+            </tr>
+          </thead>
+          ${squadHTML}
+        </table>
       </div>
     </div>
     `
     teamsHTMLEl.innerHTML = teamsHTML;
-  })
 }
 
 // API TEAM NAME END
