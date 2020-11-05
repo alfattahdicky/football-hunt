@@ -4,8 +4,7 @@ const API_KEY = '05a36867cd4e4d8bbf37e7fb67f24339';
 const LEAGUE_ID = 2021;
 const ENDPOINT_COMPETITION = `${BASE_URL}/competitions/${LEAGUE_ID}/standings`;
 const ENDPOINT_MATCH = `${BASE_URL}/competitions/${LEAGUE_ID}/matches?status=SCHEDULED`;
-const ENDPOINT_TEAM = `${BASE_URL}/teams`;
-
+const ENDPOINT_TEAM = `${BASE_URL}/teams/`;
 
 const fetchApi = url => {
   return fetch(url, {
@@ -25,7 +24,6 @@ const fetchApi = url => {
     .catch(err => console.log('Error', err));
     
 };
-
 
 // API Standing 
 function getAllStandings() {
@@ -150,7 +148,9 @@ function showDataMatch(data) {
 // API Team Name
 function getAllTeamName() {
   fetchApi(ENDPOINT_TEAM)
-    .then(data => showingDataTeamName(data))
+    .then(data => {
+      showingDataTeamName(data);
+    })
     .catch(err => console.log(`Error ${err}`));
 }
 
@@ -164,7 +164,7 @@ function showingDataTeamName(data) {
       <div class="card center-align">
         <div class="card-content"><img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="100px" height="100px"  alt=""></div>
         <div class="card-action">
-          <a class="waves-effect waves-block waves-light btn btn-team">${team.name}</a>
+          <a class="waves-effect waves-block waves-light btn btn-team" href="./home.html?id=${team.id}">${team.name}</a>
         </div>
       </div>
     </div>
@@ -172,4 +172,48 @@ function showingDataTeamName(data) {
     teamsEl.innerHTML = teams;
   })
 }
-// API TEAM END
+
+// ID Team
+
+const urlParams = new URLSearchParams(window.location.search);
+const idParam = urlParams.get('id');
+
+function getAllTeamNameId() {
+  fetchApi(`${ENDPOINT_TEAM}home/${idParam}`)
+    .then(data => {
+      showingDataTeamNameId(data);
+    })
+    .catch(err => console.log(`Error ${err}`));
+}
+
+function showingDataTeamNameId(data) {
+  let teamsHTML = '';
+  let teamsHTMLEl = document.getElementById('body-teams');
+  console.log(data);
+  data.teams.forEach(team => {
+    teamsHTML += `
+    <div class="section">
+      <div class="container">
+        <div class="row card">
+          <div class="col s12 m6 card-image">
+            <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="${team.name}">
+          </div>
+          <div class="col s12 m6 left-align">
+            <h3>${team.name}</h3>
+            <p>${team.name} berdiri sejak tahun ${team.founded}</p>
+            <p>Venue  : ${team.venue}</p>
+            <p>Phone  : ${team.phone}</p>
+            <p>Email  : ${team.email}</p>
+            <p>Address: ${team.address}</p>
+            <p>Kunjungi Website ${team.website}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    `
+    teamsHTMLEl.innerHTML = teamsHTML;
+  })
+}
+
+// API TEAM NAME END
+
