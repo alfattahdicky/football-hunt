@@ -6,12 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	function loadNav() {
 		const xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4) {
-				if (this.status !== 200) return;
-				document.querySelectorAll('.topnav, .sidenav').forEach((e) => {
+			if (this.readyState === 4) {
+        if (this.status !== 200) return;
+        
+				document.querySelectorAll('.topnav, .sidenav').forEach(function(e)  {
 					e.innerHTML = xhttp.responseText;
-				});
-				document.querySelectorAll('.sidenav a, .topnav a').forEach((e) => {
+        });
+        
+				document.querySelectorAll('.sidenav a, .topnav a').forEach(function(e) {
 					e.addEventListener('click', function (event) {
 						const sidenav = document.querySelector('.sidenav');
 						M.Sidenav.getInstance(sidenav).close();
@@ -35,16 +37,19 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (this.readyState === 4) {
         let content = document.querySelector('.body-content');
 				if (this.status === 200) {
-          content.innerHTML = xhttp.responseText;
-          // getAllStandings();
+					content.innerHTML = xhttp.responseText;
+					if(page === 'home') {
+						const slider = document.querySelectorAll('.slider');
+						M.Slider.init(slider, {
+							indicators: false,
+							height: 450
+						})
+						getAllStandings();
+						getAllTeamName();
+					} else if(page === 'match') {
+						getMatchAll();
+					}
           // Slider
-          if(page === 'home') {
-            const slider = document.querySelectorAll('.slider');
-            M.Slider.init(slider, {
-              indicators: false,
-              height: 450
-            })
-          }
 				} else if (this.status === 404) {
 					content.innerHTML = '<p>Page not found.</p>';
 				} else {

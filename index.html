@@ -5,16 +5,19 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="./style/materialize.min.css">
       <link rel="stylesheet" href="./style/style.css">
+      <link rel="preconnect" href="https://crests.football-data.org">
+      <link rel="preconnect" href="https://api.football-data.org">
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <title>Football Hunt</title>
     </head>
+    <body id="home">
     <!-- Navbar -->
     <div class="navbar-fixed">
       <nav class="navbar">
         <div class="nav-wrapper container">
           <a href="#" class="brand-logo">Football Hunt</a>
-          <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+          <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons icon">menu</i></a>
           <ul class="topnav right hide-on-med-and-down"></ul>
         </div>
       </nav>
@@ -25,17 +28,31 @@
     <!-- Content -->
     <div class="body-content"></div>
     <!-- Content End -->
+    
+    
+    <!-- Hero -->
+    <div class="center orange footer-hero">
+      <div class="container">
+        <h3>Football Hunt</h3>
+        <h5>Terbaru, Terkini dan Terupdate</h5>
+        <a href="#home" class="waves-effect btn btn-hero">Jelajahi Sekarang</a>
+      </div>
+    </div>
 
-
-
-
-
+    <!-- Footer -->
+    <footer class="page-footer">
+      <div class="footer-copyright">
+        <div class="container center footer-text">
+            © 2020 Football Hunt Jakarta
+        </div>
+    </footer>
+    
+    
     <script type="text/javascript" src="./script/materialize.min.js"></script>
-    <!-- <script src="./script/api-standings.js"></script> -->
+    <script src="./script/api.js"></script>
     <script src="./script/nav.js"></script>
-    <!-- <script src="./script/idb.js"></script>
+    <script src="./script/idb.js"></script>
     <script src="./script/db.js"></script>
-    <script src="./script/sw-register.js"></script> -->
-    <body>
+    <script src="./script/sw-register.js"></script>
     </body>
   </html>

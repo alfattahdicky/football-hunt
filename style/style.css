@@ -1,3 +1,7 @@
+:root {
+  --color: #043249;
+  --loading: orange;
+}
 *{
   margin: 0;
   padding: 0;
@@ -5,13 +9,44 @@
 }
 
 .navbar{
-  background-color: #043249 !important;
+  background-color: var(--color) !important;
 }
 
 .brand-logo {
-  font-size: 1.8rem !important;
+  font-size: 1.7rem !important;
 }
 
 .slide-text {
   text-shadow: 1px 1px 3px #000;
+}
+
+.btn-hero {
+  margin: 20px 0;
+  background-color: var(--color);
+  letter-spacing: 1px;
+}
+.btn-hero:hover {
+  background-color: #000;
+}
+
+footer{
+  background-color: var(--color) !important;
+}
+.footer-hero {
+  padding: 20px 0;
+}
+.footer-text {
+  padding-bottom: 20px;
+}
+/* home.html */
+.section-match{
+  background-color: var(--color);
+}
+
+/* match.html */
+.btn-team {
+  background-color: var(--color);
+}
+.btn-team:hover {
+  background-color: #000;
 }
