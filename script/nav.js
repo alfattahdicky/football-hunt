@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4) {
-        let content = document.querySelector('.body-content');
+				const content = document.querySelector('.body-content');
 				if (this.status === 200) {
 					content.innerHTML = xhttp.responseText;
 					if(page === 'home') {

@@ -27,19 +27,29 @@ const fetchApi = url => {
 
 // API Standing 
 function getAllStandings() {
-  fetchApi(ENDPOINT_COMPETITION)
-    .then(data => {
-      showStandings(data);
+  if('caches' in window) {
+    caches.match(ENDPOINT_COMPETITION).then(response => {
+      if(response) {
+        response.json().then(data => {
+          console.log(`Competition : ${data}`);
+          showStandings(data);
+        })
+      }
     })
-    .catch(err => {
-      console.log(`Error ${err}`);
-    })
+    fetchApi(ENDPOINT_COMPETITION)
+      .then(data => {
+        showStandings(data);
+      })
+      .catch(err => {
+        console.log(`Error ${err}`);
+      })
+  }
 }
 
 function showStandings(data) {
   let standings = '';
   let standingsEl = document.getElementById('homeKlasemen');
-  console.log(data);
+  // console.log(data);
   data.standings[0].table.forEach(function(standing) {
     standings += `
     <tr>
@@ -72,11 +82,11 @@ function showStandings(data) {
   </style>
   <div class="card">
 
-  <table class="striped responsive-table">
+  <table class="striped responsive-table centered">
       <thead>
           <tr>
               <th>No</th>
-              <th>Logo</th>
+              <th></th>
               <th>Team Name</th>
               <th>W</th>
               <th>D</th>
@@ -100,6 +110,15 @@ function showStandings(data) {
 
 // API Match
 function getMatchAll() {
+  if('caches' in window) {
+    caches.match(ENDPOINT_MATCH).then( response => {
+      if(response) {
+        response.json().then(data => {
+          showDataMatch(data);
+        })
+      }
+    })
+  }
   fetchApi(ENDPOINT_MATCH)
     .then(data => {
       showDataMatch(data);
@@ -112,7 +131,7 @@ function getMatchAll() {
 function showDataMatch(data) {
   let matchs = '';
   let matchsEl = document.getElementById('match');
-  console.log(data);
+  // console.log(data);
   data.matches.forEach(function(match){
     const date = new Date(Date.parse(match.utcDate));
     const options = {
@@ -121,40 +140,59 @@ function showDataMatch(data) {
       month: 'long',
       day: 'numeric'
     }
+    const optionsTime = {
+      hour: '2-digit', 
+      minute:'2-digit',
+      hour12: true
+    }
     const dateToLocalString = date.toLocaleDateString('id-ID', options);
+    const timeToLocalString = date.toLocaleTimeString([],optionsTime);
     matchs += `
-    <style>
-      h6{
-        border-bottom: 2px solid #043249;
-        padding: 5px 0;
-      }
-      .match{
-        display: flex;
-      }
-    </style>
-    <div class="col s12 m6">
-      <h5 class="center-align white-text">${dateToLocalString}</h5>
-      <div class="card">
-        <h6 class="center-align  card-title">Matchday ${match.matchday}</h6>
-          <div class="container">
-            <div class="row">
-              <div class="match card-content">
-                <p class="col s3 left-align">${match.homeTeam.name}</p>
-                <p class="col s6 center-align">VS</p>
-                <p class="col s3">${match.awayTeam.name}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
+      <style>
+        thead {
+          background-color: #043249;
+        }
+      </style>
+      <thead>
+        <tr class="white-text">
+          <th></th>
+          <th >${dateToLocalString}</th>
+          <th>Matchday ${match.matchday}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${match.homeTeam.name}</td>
+          <td>VS</td>
+          <td>${match.awayTeam.name}</td>
+        </tr>
+        <tr>
+          <td>${match.score.fullTime.homeTeam || 0}</td>
+          <td>${timeToLocalString}</td>
+          <td>${match.score.fullTime.awayTeam || 0}</td>
+        </tr>
+      </tbody>
     ` 
-    matchsEl.innerHTML = matchs;
+    matchsEl.innerHTML = `
+      <table class="centered">
+        ${matchs}
+      </table>
+    `;
   })
 }
 // API Match END
 
 // API Team Name
 function getAllTeamName() {
+  if('caches' in window) {
+    caches.match(ENDPOINT_TEAM).then(response => {
+      if(response) {
+        response.json().then(data => {
+          showingDataTeamName(data);
+        })
+      }
+    })
+  }
   fetchApi(ENDPOINT_TEAM)
     .then(data => {
       showingDataTeamName(data);
@@ -165,12 +203,14 @@ function getAllTeamName() {
 function showingDataTeamName(data) {
   let teams =  '';
   let teamsEl = document.getElementById('teams');
-  console.log(data);
+  // console.log(data);
   data.teams.forEach(team => {
     teams += `
       <div class="col s12 m4">
       <div class="card center-align">
-        <div class="card-content"><img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="100px" height="100px"  alt=""></div>
+        <div class="section">
+          <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="100px" height="100px"  alt="Picture ${team.name}">
+        </div>
         <div class="card-action">
           <a class="waves-effect waves-block waves-light btn btn-team" href="./team.html?id=${team.id}">${team.name}</a>
         </div>
@@ -187,6 +227,15 @@ const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
 
 function getAllTeamNameId() {
+  if('caches' in window) {
+    caches.match(`${ENDPOINT_TEAM}/${idParam}`).then(response => {
+     if(response) {
+       response.json().then(data => {
+         showingDataTeamNameId(data);
+       })
+     } 
+    })
+  }
   fetchApi(`${ENDPOINT_TEAM}/${idParam}`)
     .then(data => {
       showingDataTeamNameId(data);
@@ -198,19 +247,16 @@ function showingDataTeamNameId(data) {
   let teamsHTML = '';
   let squadHTML = '';
   let teamsHTMLEl = document.getElementById('content-team');
+  console.log(data);
   data.squad.forEach(squads => {
-    if(squads.position === null) {
-      return '';
-    }
     squadHTML += `
-    <tbody>
+    <tbody> 
         <td>${squads.name}</td>
-        <td>${squads.position}</td>
+        <td>${squads.position || ''}</td>
         <td>${squads.nationality}</td>
     </tbody>
     `
   })
-  console.log(data);
     teamsHTML += `
     <div class="section center">
       <div class="container">
@@ -228,7 +274,7 @@ function showingDataTeamNameId(data) {
             <p>Kunjungi Website ${data.website}</p>
           </div>
         </div>
-        <table>
+        <table class="centered">
           <thead>
             <tr>
                 <th>Name</th>

@@ -16,30 +16,33 @@
     <div class="navbar-fixed">
       <nav class="navbar">
         <div class="nav-wrapper container">
-          <a href="#" class="brand-logo">Football Hunt</a>
-          <a href="#index.html" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons icon">arrow_back</i></a>
-          <ul class="topnav right hide-on-med-and-down"></ul>
+          <a href="/index.html" class="brand-logo right">Football Hunt</a>
+          <a href="/index.html" class="sidenav-trigger"><i class="material-icons">arrow_back</i></a>
+          <ul class="left hide-on-med-and-down">
+            <a href="/index.html">
+              <i class="material-icons icon">arrow_back</i>
+            </a>
+          </ul>
         </div>
       </nav>
     </div>
-    <ul class="sidenav" id="nav-mobile"></ul>
     <!-- Navbar End -->
 
     <!-- Content -->
     <div id="content-team"></div>
     <!-- Content End -->
     
-    
+    <!-- Save -->
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large btn-save" id="save">
+      <i class="large material-icons">save</i>
+      </a>
+    </div>
+
     <script type="text/javascript" src="./script/materialize.min.js"></script>
     <script src="./script/api.js"></script>
-    <script src="./script/nav.js"></script>
-    <script src="./script/idb.js"></script>
+    <script src="./script/script.js"></script>
     <script src="./script/db.js"></script>
-    <script src="./script/sw-register.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        getAllTeamNameId();
-      })
-    </script>
+    <script src="./script/idb.js"></script>
     </body>
   </html>

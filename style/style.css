@@ -1,5 +1,6 @@
 :root {
   --color: #043249;
+  --color-hover: #000;
   --loading: orange;
 }
 *{
@@ -17,7 +18,7 @@
 }
 
 .slide-text {
-  text-shadow: 1px 1px 3px #000;
+  text-shadow: 1px 1px 3px var(--color-hover);
 }
 
 .btn-hero {
@@ -26,7 +27,7 @@
   letter-spacing: 1px;
 }
 .btn-hero:hover {
-  background-color: #000;
+  background-color: var(--color-hover);
 }
 
 footer{
@@ -38,15 +39,26 @@ footer{
 .footer-text {
   padding-bottom: 20px;
 }
-/* home.html */
-.section-match{
-  background-color: var(--color);
-}
 
 /* match.html */
 .btn-team {
   background-color: var(--color);
 }
 .btn-team:hover {
-  background-color: #000;
+  background-color: var(--color-hover);
+}
+
+/* team.html */
+.btn-save {
+  background-color: var(--color);
+}
+
+.btn-save:hover {
+  background-color: var(--color-hover);
+}
+
+@media (max-width: 768px) {
+  .btn-team{
+    font-size: 1rem !important;
+  }
 }
