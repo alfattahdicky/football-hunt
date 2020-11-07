@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
 						getAllTeamName();
 					} else if(page === 'match') {
 						getMatchAll();
+					} else if(page === 'saved') {
+						getSavedTeam();
 					}
           // Slider
 				} else if (this.status === 404) {
