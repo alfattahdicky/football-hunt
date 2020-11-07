@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 						getMatchAll();
 					} else if(page === 'saved') {
 						getSavedTeam();
-					}
+						getDeleteTeam();
+					} 
           // Slider
 				} else if (this.status === 404) {
 					content.innerHTML = '<p>Page not found.</p>';

@@ -49,11 +49,11 @@ footer{
 }
 
 /* team.html */
-.btn-save {
+.btn-save,.btn-delete,.btn-fixed {
   background-color: var(--color);
 }
 
-.btn-save:hover {
+.btn-save:hover,.btn-delete:hover,.btn-fixed:hover {
   background-color: var(--color-hover);
 }
 

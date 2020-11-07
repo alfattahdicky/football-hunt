@@ -236,7 +236,7 @@ function getSavedTeam() {
             <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="100px" height="100px"  alt="Picture ${team.name}">
           </div>
           <div class="card-action">
-            <a class="waves-effect waves-block waves-light btn btn-team" href="./team.html?id=${team.id}&saved=true">${team.name}</a>
+            <a class="waves-effect waves-block waves-light btn btn-team" href="./team.html?id=${team.id}&#saved=true">${team.name}</a>
           </div>
         </div>
       </div>
@@ -246,6 +246,31 @@ function getSavedTeam() {
     })
   })
 }
+function getDeleteTeam() {
+  deleteTeam().then(team => {
+    console.log(team);
+    let teamsName =  '';
+    let teamsEl = document.getElementById('teams');
+    // console.log(data);
+    team.forEach(team => {
+      teamsName += `
+        <div class="col s12 m4">
+        <div class="card center-align">
+          <div class="section">
+            <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="100px" height="100px"  alt="Picture ${team.name}">
+          </div>
+          <div class="card-action">
+            <a class="waves-effect waves-block waves-light btn btn-team" href="./team.html?id=${team.id}">${team.name}</a>
+          </div>
+        </div>
+      </div>
+      `
+      teamsEl.innerHTML = teamsName;
+      console.log(team.name)
+    })
+  })
+}
+
 
 
 // ID Team
@@ -342,16 +367,16 @@ function getSavedTeamById() {
         <div class="container">
           <div class="row">
             <div class="col s12 m6">
-              <img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="${data.name}">
+              <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="${team.name}">
             </div>
             <div class="col s12 m6 left-align">
-              <h3>${data.name}</h3>
-              <p>${data.name} berdiri sejak tahun ${data.founded}</p>
-              <p>Venue  : ${data.venue}</p>
-              <p>Phone  : ${data.phone}</p>
-              <p>Email  : ${data.email}</p>
-              <p>Address: ${data.address}</p>
-              <p>Kunjungi Website ${data.website}</p>
+              <h3>${team.name}</h3>
+              <p>${team.name} berdiri sejak tahun ${team.founded}</p>
+              <p>Venue  : ${team.venue}</p>
+              <p>Phone  : ${team.phone}</p>
+              <p>Email  : ${team.email}</p>
+              <p>Address: ${team.address}</p>
+              <p>Kunjungi Website ${team.website}</p>
             </div>
           </div>
           <table class="centered">
@@ -371,6 +396,54 @@ function getSavedTeamById() {
   })
 }
 
+function deleteTeamById() {
+  deleteTeam(idParam).then(team => {
+    let teamsHTML = '';
+    let squadHTML = '';
+    let teamsHTMLEl = document.getElementById('content-team');
+    console.log(team);
+    team.forEach(squads => {
+      squadHTML += `
+      <tbody> 
+          <td>${squads.name}</td>
+          <td>${squads.position || ''}</td>
+          <td>${squads.nationality}</td>
+      </tbody>
+      `
+    })
+      teamsHTML += `
+      <div class="section center">
+        <div class="container">
+          <div class="row">
+            <div class="col s12 m6">
+              <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="${team.name}">
+            </div>
+            <div class="col s12 m6 left-align">
+              <h3>${team.name}</h3>
+              <p>${team.name} berdiri sejak tahun ${team.founded}</p>
+              <p>Venue  : ${team.venue}</p>
+              <p>Phone  : ${team.phone}</p>
+              <p>Email  : ${team.email}</p>
+              <p>Address: ${team.address}</p>
+              <p>Kunjungi Website ${team.website}</p>
+            </div>
+          </div>
+          <table class="centered">
+            <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Posisi</th>
+                  <th>Nasional</th>
+              </tr>
+            </thead>
+            ${squadHTML}
+          </table>
+        </div>
+      </div>
+      `
+      teamsHTMLEl.innerHTML = teamsHTML;
+  }) 
+}
 
 // API TEAM NAME END
 

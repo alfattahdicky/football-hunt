@@ -23,7 +23,7 @@ function getAll() {
       return store.getAll();
     }).then(team => {
       resolve(team);
-    })
+    }).catch(team => reject(team))
   })
 }
 
@@ -36,5 +36,17 @@ function getById(id) {
     }).then(team => {
       resolve(team);
     }).catch(reject(team))
+  })
+}
+
+function deleteTeam(id) {
+  return new Promise((resolve,reject) => {
+    dbPromised.then(db => {
+      const tx = db.transaction('team', 'readwrite');
+      const store = tx.objectStore('team');
+      return store.delete(id);
+    }).then(team => {
+      resolve(team);
+    }).catch(team => reject(team));
   })
 }
