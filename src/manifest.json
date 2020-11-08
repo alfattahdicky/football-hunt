@@ -1,0 +1,30 @@
+{
+  "name": "Football Hunt",
+  "short_name": "Football Hunt",
+  "gcm_sender_id": "908658484710",
+  "description": "Berita tentang Sepak Bola Liga Inggris terupdate",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000",
+  "theme_color": "#000",
+  "icons": [
+    {
+      "src": "assets/icon/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon/icon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon/icon-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg",
+      "purpose": "any maskable"
+    }
+  ]
+}

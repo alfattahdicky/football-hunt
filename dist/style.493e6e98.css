@@ -1,0 +1,98 @@
+:root {
+  --color: #043249;
+  --color-hover: #000;
+  --loading: orange;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar{
+  background-color: var(--color) !important;
+}
+
+.brand-logo {
+  font-size: 1.7rem !important;
+}
+
+.slide-text {
+  text-shadow: 1px 1px 3px var(--color-hover);
+}
+
+.btn-hero {
+  margin: 20px 0;
+  background-color: var(--color);
+  letter-spacing: 1px;
+}
+.btn-hero:hover {
+  background-color: var(--color-hover);
+}
+
+footer{
+  background-color: var(--color) !important;
+}
+.footer-hero {
+  padding: 20px 0;
+}
+.footer-text {
+  padding-bottom: 20px;
+}
+
+/* match.html */
+.btn-team {
+  background-color: var(--color);
+}
+.btn-team:hover {
+  background-color: var(--color-hover);
+}
+
+/* team.html */
+.btn-save,.btn-delete,.btn-fixed {
+  background-color: var(--color);
+}
+
+.btn-save:hover,.btn-delete:hover,.btn-fixed:hover {
+  background-color: var(--color-hover);
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color:var(--color);
+  margin: 10px;
+  animation: circle 1s linear infinite;
+}
+
+.circle:nth-child(2) {
+  animation-duration: .4s;
+  background-color: var(--color);
+}
+
+.circle:nth-child(3) {
+  animation-duration: .6s;
+  background-color: var(--color);
+}
+
+@keyframes circle {
+  75% {
+      transform: translateY(10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-team{
+    font-size: 1rem !important;
+  }
+}
+
+/*# sourceMappingURL=/style.493e6e98.css.map */
