@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnDelete = document.getElementById('delete');
   const urlParams = new URLSearchParams(window.location.search);
   const isFromSaved = urlParams.get('saved');
+  const deleteId = urlParams.get('id');
   const floatingButton = document.querySelectorAll('.fixed-action-btn');
   const item = getAllTeamNameId();
   M.FloatingActionButton.init(floatingButton);
@@ -19,6 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   btnDelete.addEventListener('click', () =>{
-    deleteTeamById();
+    deleteTeam(parseInt(deleteId));
   })
 })

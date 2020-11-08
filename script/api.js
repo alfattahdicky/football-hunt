@@ -27,23 +27,26 @@ const fetchApi = url => {
 
 // API Standing 
 function getAllStandings() {
-  if('caches' in window) {
-    caches.match(ENDPOINT_COMPETITION).then(response => {
-      if(response) {
-        response.json().then(data => {
-          console.log(`Competition : ${data}`);
+  return new Promise((resolve,reject) => {
+    if('caches' in window) {
+      caches.match(ENDPOINT_COMPETITION).then(response => {
+        if(response) {
+          response.json().then(data => {
+            // console.log(`Competition : ${data}`);
+            showStandings(data);
+            resolve(data);
+          })
+        }
+      })
+      fetchApi(ENDPOINT_COMPETITION)
+        .then(data => {
           showStandings(data);
         })
-      }
-    })
-    fetchApi(ENDPOINT_COMPETITION)
-      .then(data => {
-        showStandings(data);
-      })
-      .catch(err => {
-        console.log(`Error ${err}`);
-      })
-  }
+        .catch(err => {
+          console.log(`Error ${err}`);
+        })
+    }
+  })
 }
 
 function showStandings(data) {
@@ -131,7 +134,7 @@ function getMatchAll() {
 function showDataMatch(data) {
   let matchs = '';
   let matchsEl = document.getElementById('match');
-  // console.log(data);
+  console.log(data);
   data.matches.forEach(function(match){
     const date = new Date(Date.parse(match.utcDate));
     const options = {
@@ -224,7 +227,7 @@ function showingDataTeamName(data) {
 // Save data API TEAM
 function getSavedTeam() {
   getAll().then(team => {
-    console.log(team);
+    // console.log(team);
     let teamsName =  '';
     let teamsEl = document.getElementById('teams');
     // console.log(data);
@@ -242,36 +245,9 @@ function getSavedTeam() {
       </div>
       `
       teamsEl.innerHTML = teamsName;
-      console.log(team.name)
     })
   })
 }
-function getDeleteTeam() {
-  deleteTeam().then(team => {
-    console.log(team);
-    let teamsName =  '';
-    let teamsEl = document.getElementById('teams');
-    // console.log(data);
-    team.forEach(team => {
-      teamsName += `
-        <div class="col s12 m4">
-        <div class="card center-align">
-          <div class="section">
-            <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="100px" height="100px"  alt="Picture ${team.name}">
-          </div>
-          <div class="card-action">
-            <a class="waves-effect waves-block waves-light btn btn-team" href="./team.html?id=${team.id}">${team.name}</a>
-          </div>
-        </div>
-      </div>
-      `
-      teamsEl.innerHTML = teamsName;
-      console.log(team.name)
-    })
-  })
-}
-
-
 
 // ID Team
 
@@ -303,7 +279,7 @@ function showingDataTeamNameId(data) {
   let teamsHTML = '';
   let squadHTML = '';
   let teamsHTMLEl = document.getElementById('content-team');
-  console.log(data);
+  // console.log(data);
   data.squad.forEach(squads => {
     squadHTML += `
     <tbody> 
@@ -352,7 +328,7 @@ function getSavedTeamById() {
     let teamsHTML = '';
     let squadHTML = '';
     let teamsHTMLEl = document.getElementById('content-team');
-    console.log(team);
+    // console.log(team);
     team.forEach(squads => {
       squadHTML += `
       <tbody> 
@@ -396,54 +372,7 @@ function getSavedTeamById() {
   })
 }
 
-function deleteTeamById() {
-  deleteTeam(idParam).then(team => {
-    let teamsHTML = '';
-    let squadHTML = '';
-    let teamsHTMLEl = document.getElementById('content-team');
-    console.log(team);
-    team.forEach(squads => {
-      squadHTML += `
-      <tbody> 
-          <td>${squads.name}</td>
-          <td>${squads.position || ''}</td>
-          <td>${squads.nationality}</td>
-      </tbody>
-      `
-    })
-      teamsHTML += `
-      <div class="section center">
-        <div class="container">
-          <div class="row">
-            <div class="col s12 m6">
-              <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="${team.name}">
-            </div>
-            <div class="col s12 m6 left-align">
-              <h3>${team.name}</h3>
-              <p>${team.name} berdiri sejak tahun ${team.founded}</p>
-              <p>Venue  : ${team.venue}</p>
-              <p>Phone  : ${team.phone}</p>
-              <p>Email  : ${team.email}</p>
-              <p>Address: ${team.address}</p>
-              <p>Kunjungi Website ${team.website}</p>
-            </div>
-          </div>
-          <table class="centered">
-            <thead>
-              <tr>
-                  <th>Name</th>
-                  <th>Posisi</th>
-                  <th>Nasional</th>
-              </tr>
-            </thead>
-            ${squadHTML}
-          </table>
-        </div>
-      </div>
-      `
-      teamsHTMLEl.innerHTML = teamsHTML;
-  }) 
-}
+
 
 // API TEAM NAME END
 

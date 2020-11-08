@@ -1,4 +1,4 @@
-const CACHE_NAME = 'football-hunt-v1';
+const CACHE_NAME = 'football-hunt-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -10,6 +10,8 @@ const urlsToCache = [
   '/pages/home.html',
   '/pages/match.html',
   '/pages/saved.html',
+  'https://fonts.googleapis.com/icon?family=Material+Icons',
+  'https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2',
   '/style/materialize.min.css',
   '/style/style.css',
   '/script/api.js',
@@ -33,13 +35,12 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener("fetch", (event) =>{
-  const BASE_URL = 'https://api.football-data.org/v2';  
+  const BASE_URL = 'https://api.football-data.org/v2'; 
   const LEAGUE_ID = 2021;
   const ENDPOINT_COMPETITION = `${BASE_URL}/competitions/${LEAGUE_ID}/standings`;
   const ENDPOINT_MATCH = `${BASE_URL}/competitions/${LEAGUE_ID}/matches?status=SCHEDULED`;
   const ENDPOINT_TEAM = `${BASE_URL}/teams`;
-  let ARRAY_ENDPOINT = [ENDPOINT_COMPETITION,ENDPOINT_MATCH,ENDPOINT_TEAM];
-  if (event.request.url.indexOf(...ARRAY_ENDPOINT) > -1) {
+  if (event.request.url.indexOf(ENDPOINT_COMPETITION) > -1 && event.request.url.indexOf(ENDPOINT_MATCH) > -1 && event.request.url.indexOf(ENDPOINT_TEAM) > -1) {
     event.respondWith(
       caches.open(CACHE_NAME).then((cache) => {
         return fetch(event.request).then((response) => {
@@ -50,7 +51,7 @@ self.addEventListener("fetch", (event) =>{
     );
   } else {
     event.respondWith(
-      caches.match(event.request).then((response) => {
+      caches.match(event.request, { ignoreSearch: true }).then(function(response) {
         return response || fetch (event.request);
       })
     )
@@ -63,7 +64,7 @@ self.addEventListener('activate', (event) => {
 		caches.keys().then((cacheNames) => {
 			return Promise.all(
 				cacheNames.map((cacheName) => {
-					if (cacheName !== CACHE_NAME) {
+					if (cacheName !== CACHE_NAME && cacheName.startsWith('football-hunt')) {
 						console.log(`ServiceWorker: cache ${cacheName} dihapus`);
 						return caches.delete(cacheName);
 					}

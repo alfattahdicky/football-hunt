@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
 						getMatchAll();
 					} else if(page === 'saved') {
 						getSavedTeam();
-						getDeleteTeam();
 					} 
           // Slider
 				} else if (this.status === 404) {

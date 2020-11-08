@@ -45,8 +45,8 @@ function deleteTeam(id) {
       const tx = db.transaction('team', 'readwrite');
       const store = tx.objectStore('team');
       return store.delete(id);
-    }).then(team => {
-      resolve(team);
-    }).catch(team => reject(team));
+    }).then(() => {
+      alert('team Deleted');
+    })
   })
 }
