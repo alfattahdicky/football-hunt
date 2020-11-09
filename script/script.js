@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", () => {
   const btnSave = document.getElementById('save');
   const btnDelete = document.getElementById('delete');
   const urlParams = new URLSearchParams(window.location.search);
@@ -22,4 +22,4 @@ document.addEventListener('DOMContentLoaded', function() {
   btnDelete.addEventListener('click', () =>{
     deleteTeam(parseInt(deleteId));
   })
-})
+});

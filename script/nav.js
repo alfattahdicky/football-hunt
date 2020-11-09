@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
 	const navbar = document.querySelectorAll('.sidenav');
 	M.Sidenav.init(navbar);
 	loadNav();
@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		xhttp.send();
 	}
 });
-
   
   
   
