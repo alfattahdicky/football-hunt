@@ -40,6 +40,7 @@ function getAllStandings() {
       })
       fetchApi(ENDPOINT_COMPETITION)
         .then(data => {
+          document.getElementById('loading').style.display = 'none';
           showStandings(data);
         })
         .catch(err => {
@@ -124,6 +125,7 @@ function getMatchAll() {
   }
   fetchApi(ENDPOINT_MATCH)
     .then(data => {
+      document.getElementById('loading').style.display = 'none';
       showDataMatch(data);
     })
     .catch(err => {
@@ -198,6 +200,7 @@ function getAllTeamName() {
   }
   fetchApi(ENDPOINT_TEAM)
     .then(data => {
+      document.getElementById('loading').style.display = 'none';
       showingDataTeamName(data);
     })
     .catch(err => console.log(`Error ${err}`));
@@ -268,6 +271,7 @@ function getAllTeamNameId() {
     }
     fetchApi(`${ENDPOINT_TEAM}/${idParam}`)
       .then(data => {
+        document.getElementById('loading').style.display = 'none';
         showingDataTeamNameId(data);
         resolve(data);
       })
