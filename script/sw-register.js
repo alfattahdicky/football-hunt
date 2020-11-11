@@ -29,19 +29,21 @@ function requestPermission() {
       // navigator.serviceWorker.getRegistration().then(reg =>{
       //   reg.showNotification("Notifikasi Diizinkan");
       // })
-      if(('PushManager' in window)) {
-        navigator.serviceWorker.getRegistration().then(registration => {
-          registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            // gunakan public key
-            applicationServerKey: urlBase64ToUint8Array("BGGEoB87IK1d1Np4-cjWbBsvNQ4Lh8Z8mWvD9hr2FYk0FjY_hgaDa8aJhc3-q9dUbZArGe9_WyaPpXR8UJOCNDQ")
-          }).then(subscribe => {
-            // console.log('Berhasil melakukan subscribe dengan endpoint', subscribe.endpoint);
-            // console.log('Berhasil melakukan subscribe dengan p256dh key:', btoa(String.fromCharCode.apply(null, new Uint8Array(subscribe.getKey('p256dh')))));
-            // console.log('Berhasil melakukan subscribe dengan auth key: ', btoa(String.fromCharCode.apply(null, new Uint8Array(subscribe.getKey('auth')))));
-          }).catch(e => console.log('Tidak dapat melakukan subscribe', e.message));
-        })
-      }
+      navigator.serviceWorker.ready.then(() => {
+        if(('PushManager' in window)) {
+          navigator.serviceWorker.getRegistration().then(registration => {
+            registration.pushManager.subscribe({
+              userVisibleOnly: true,
+              // gunakan public key
+              applicationServerKey: urlBase64ToUint8Array("BFWEeFcLzP1TBS7Bf5NGJysHeZF7GKlGa-1IJO7Ob0iUns--NvPDiEpYH8RyZgNumM8dmipOMZ2WX87x8XiPhPU")
+            }).then(subscribe => {
+              console.log('Berhasil melakukan subscribe dengan endpoint', subscribe.endpoint);
+              console.log('Berhasil melakukan subscribe dengan p256dh key:', btoa(String.fromCharCode.apply(null, new Uint8Array(subscribe.getKey('p256dh')))));
+              console.log('Berhasil melakukan subscribe dengan auth key: ', btoa(String.fromCharCode.apply(null, new Uint8Array(subscribe.getKey('auth')))));
+            }).catch(e => console.log('Tidak dapat melakukan subscribe', e.message));
+          });
+        }
+      });
     })
   }
 }

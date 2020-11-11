@@ -1,4 +1,4 @@
-const CACHE_NAME = 'football-hunt-v2';
+const CACHE_NAME = 'football-hunt-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -26,7 +26,7 @@ const urlsToCache = [
   '/assets/3.jpg',
   '/assets/icon/icon-144x144.png',
   '/assets/icon/icon-192x192.svg',
-  '/assets/icon/icon-512x512.svg',
+  '/assets/icon/icon-512x512.png',
 ]
 
 self.addEventListener("install", function(event) {

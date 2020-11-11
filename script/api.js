@@ -271,7 +271,6 @@ function getAllTeamNameId() {
     }
     fetchApi(`${ENDPOINT_TEAM}/${idParam}`)
       .then(data => {
-        document.getElementById('loading').style.display = 'none';
         showingDataTeamNameId(data);
         resolve(data);
       })
@@ -375,8 +374,6 @@ function getSavedTeamById() {
       teamsHTMLEl.innerHTML = teamsHTML;
   })
 }
-
-
 
 // API TEAM NAME END
 

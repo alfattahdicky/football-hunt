@@ -12,7 +12,9 @@ function saveForLater(team) {
     console.log(team);
     store.put(team);
     return tx.complete;
-  }).then(() => alert('Team Berhasil Disimpan'))
+  }).then(() => {
+    M.toast({html: "Team Berhasil Disimpan"});
+  })
 }
 
 function getAll() {
@@ -46,7 +48,7 @@ function deleteTeam(id) {
       const store = tx.objectStore('team');
       return store.delete(id);
     }).then(() => {
-      alert('team Deleted');
+      M.toast({html: "Team telah dihapus dari Saved"});
     })
   })
 }
