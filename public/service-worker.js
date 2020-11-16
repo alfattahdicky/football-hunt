@@ -129,7 +129,10 @@ workbox.routing.registerRoute(
     cacheName: 'api-football',
     plugins: [
       new workbox.expiration.Plugin({
-        maxAgeSeconds: 60 * 60
+        maxAgeSeconds: 60 * 60 * 24
+      }),
+      new workbox.cacheableResponse.Plugin({
+        statuses: [200],
       })
     ]
   })
@@ -158,26 +161,6 @@ workbox.routing.registerRoute(
     ]
   })
 )
-
-
-
-
-// const CACHE_NAME = 'football-hunt-v3';
-// const urlsToCache = [
-//   '/manifest.json',
-//   '/pages/home.html',
-//   '/pages/match.html',
-//   '/pages/saved.html',
-//   'https://fonts.googleapis.com/icon?family=Material+Icons',
-// 	'https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2',
-//   '/style/style.css',
-//   '/assets/1.jpg',
-//   '/assets/2.jpg',
-//   '/assets/3.jpg',
-//   '/assets/icon/icon-144x144.png',
-//   '/assets/icon/icon-192x192.svg',
-//   '/assets/icon/icon-512x512.png',
-// ]
 
 self.addEventListener('push', event => {
   let body;
