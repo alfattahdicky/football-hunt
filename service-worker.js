@@ -2,7 +2,12 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 if (workbox) console.log('Workbox Berhasil dimuat');
 else console.log('Workbox gagal dimuat');
 
-workbox.precaching.precacheAndRoute([{
+workbox.precaching.precacheAndRoute([
+  {
+    url: '/',
+    revision: '1'
+  },
+  {
     url: '/index.html',
     revision: '1'
   },
@@ -20,6 +25,18 @@ workbox.precaching.precacheAndRoute([{
   },
   {
     url: '/manifest.json',
+    revision: 'null'
+  },
+  {
+    url: '/pages/home.html',
+    revision: 'null'
+  },
+  {
+    url: '/pages/match.html',
+    revision: 'null'
+  },
+  {
+    url: '/pages/saved.html',
     revision: 'null'
   },
   {
@@ -58,6 +75,30 @@ workbox.precaching.precacheAndRoute([{
     url: '/script/sw-register.js',
     revision: 'null'
   },
+  {
+    url: '/assets/1.jpg',
+    revision: 'null'
+  },
+  {
+    url: '/assets/2.jpg',
+    revision: 'null'
+  },
+  {
+    url: '/assets/3.jpg',
+    revision: 'null'
+  },
+  {
+    url: '/assets/icon/icon-144x144.png',
+    revision: 'null'
+  },
+  {
+    url: '/assets/icon/icon-192x192.png',
+    revision: 'null'
+  },
+  {
+    url: '/assets/icon/icon-512x512.png',
+    revision: 'null'
+  },
 ], {
   ignoreUrlParameterMatching: [/.*/],
 })
@@ -88,7 +129,18 @@ workbox.routing.registerRoute(
     cacheName: 'api-football',
     plugins: [
       new workbox.expiration.Plugin({
-        maxAgeSeconds: 60 * 30
+        maxAgeSeconds: 60 * 60
+      })
+    ]
+  })
+)
+workbox.routing.registerRoute(
+  new RegExp('https://crests.football-data.org'),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'image-football',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60
       })
     ]
   })
