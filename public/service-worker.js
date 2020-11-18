@@ -100,7 +100,7 @@ workbox.precaching.precacheAndRoute([
     revision: 'null'
   },
 ], {
-  ignoreUrlParameterMatching: [/.*/],
+  ignoreUrlParametersMatching: [/.*/],
 })
 
 workbox.routing.registerRoute(
